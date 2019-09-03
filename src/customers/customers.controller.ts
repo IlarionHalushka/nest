@@ -7,11 +7,12 @@ import {
   Param,
   Post,
   Req,
-  Request,
+  Request, UsePipes, ValidationPipe,
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { CustomerService } from './customer.service';
 import { ICustomer } from './interfaces/customer.interface';
+import { JoiValidationPipe } from '../pipes/validation.pipe';
 
 @Controller('customers')
 export class CustomersController {
@@ -39,6 +40,9 @@ export class CustomersController {
   @Post()
   @HttpCode(204)
   @Header('Content-Type', 'application/json')
+  // TODO test if both validations work as expected
+  @UsePipes(new ValidationPipe({ transform: true }))
+  @UsePipes(new JoiValidationPipe(CreateCustomerDto))
   create(@Body() createCustomerDto: CreateCustomerDto): void {
     this.customersService.create(createCustomerDto);
   }
