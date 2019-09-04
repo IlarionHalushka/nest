@@ -13,6 +13,7 @@ import { CreateCustomerDto } from './dto/create-customer.dto';
 import { CustomerService } from './customer.service';
 import { ICustomer } from './interfaces/customer.interface';
 import { JoiValidationPipe } from '../pipes/validation.pipe';
+import { Roles } from '../decorators/roles.decorator';
 
 @Controller('customers')
 export class CustomersController {
@@ -39,6 +40,7 @@ export class CustomersController {
 
   @Post()
   @HttpCode(204)
+  @Roles('admin')
   @Header('Content-Type', 'application/json')
   // TODO test if both validations work as expected
   @UsePipes(new ValidationPipe({ transform: true }))
