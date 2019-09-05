@@ -21,6 +21,7 @@ export class CustomersController {
 
   // `findAll` should be on top of `findOne` method because the order matters and parameters are not necessary(required)
   @Get()
+  @Roles('admin')
   async findAll(@Req() request: Request): Promise<ICustomer[]> {
     return this.customersService.findAll();
   }
@@ -32,6 +33,7 @@ export class CustomersController {
   // }
 
   @Get(':id')
+  @Roles('admin')
   findOne(@Param() params): Promise<any[]> {
     // findOne(@Param('id') id): string {  // to get just id param
     console.log(params.id);
