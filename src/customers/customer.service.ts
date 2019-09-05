@@ -7,6 +7,7 @@ export class CustomerService {
 
   create(customer: ICustomer) {
     this.customers.push(customer);
+    return customer;
   }
 
   findAll(): ICustomer[] {

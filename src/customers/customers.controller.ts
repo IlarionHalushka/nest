@@ -7,7 +7,9 @@ import {
   Param,
   Post,
   Req,
-  Request, UsePipes, ValidationPipe,
+  Request,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { CustomerService } from './customer.service';
@@ -36,8 +38,7 @@ export class CustomersController {
   @Roles('admin')
   findOne(@Param() params): Promise<any[]> {
     // findOne(@Param('id') id): string {  // to get just id param
-    console.log(params.id);
-    return Promise.resolve([`This action returns a #${params.id} cat`]);
+    return Promise.resolve([`This action returns a #${params.id} customer`]);
   }
 
   @Post()
@@ -46,8 +47,9 @@ export class CustomersController {
   @Header('Content-Type', 'application/json')
   // TODO test if both validations work as expected
   @UsePipes(new ValidationPipe({ transform: true }))
-  @UsePipes(new JoiValidationPipe(CreateCustomerDto))
-  create(@Body() createCustomerDto: CreateCustomerDto): void {
-    this.customersService.create(createCustomerDto);
+  // TODO fix joi validation
+  // @UsePipes(new JoiValidationPipe(new CreateCustomerDto()))
+  create(@Body() createCustomerDto: CreateCustomerDto): any {
+    return this.customersService.create(createCustomerDto);
   }
 }
