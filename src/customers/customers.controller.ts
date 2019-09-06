@@ -16,6 +16,7 @@ import { CustomerService } from './customer.service';
 import { ICustomer } from './interfaces/customer.interface';
 import { JoiValidationPipe } from '../pipes/validation.pipe';
 import { Roles } from '../decorators/roles.decorator';
+import { createCustomerSchema } from './schemas/customer.schema';
 
 @Controller('customers')
 export class CustomersController {
@@ -28,28 +29,21 @@ export class CustomersController {
     return this.customersService.findAll();
   }
 
-  // WITH OBSERVABLE:
-  // @Get()
-  // findAll(): Observable<any[]> {
-  //   return of([]);
-  // }
+  @Post()
+  @HttpCode(204)
+  @Roles('admin')
+  @Header('Content-Type', 'application/json')
+  // TODO test if both validations work as expected
+  // @UsePipes(new ValidationPipe({ transform: true }))
+  @UsePipes(new JoiValidationPipe(createCustomerSchema))
+  create(@Body() createCustomerDto: CreateCustomerDto): any {
+    return this.customersService.create(createCustomerDto);
+  }
 
   @Get(':id')
   @Roles('admin')
   findOne(@Param() params): Promise<any[]> {
     // findOne(@Param('id') id): string {  // to get just id param
     return Promise.resolve([`This action returns a #${params.id} customer`]);
-  }
-
-  @Post()
-  @HttpCode(204)
-  @Roles('admin')
-  @Header('Content-Type', 'application/json')
-  // TODO test if both validations work as expected
-  @UsePipes(new ValidationPipe({ transform: true }))
-  // TODO fix joi validation
-  // @UsePipes(new JoiValidationPipe(new CreateCustomerDto()))
-  create(@Body() createCustomerDto: CreateCustomerDto): any {
-    return this.customersService.create(createCustomerDto);
   }
 }

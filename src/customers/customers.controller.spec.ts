@@ -41,7 +41,7 @@ describe('Customers Controller', () => {
     return request(app.getHttpServer())
       .post('/customers')
       .send({ name: 'John', age: 12 })
-      .expect(200)
+      .expect(201)
       .expect({ name: 'John', age: 12 });
   });
 });
