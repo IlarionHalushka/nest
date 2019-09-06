@@ -4,10 +4,19 @@ import { AppService } from './app.service';
 import { CustomersController } from './customers/customers.controller';
 import { CustomerService } from './customers/customer.service';
 import { CustomersModule } from './customers/customers.module';
+import { MorganInterceptor, MorganModule } from 'nest-morgan';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
-  imports: [CustomersModule],
+  imports: [CustomersModule, MorganModule.forRoot()],
   controllers: [AppController, CustomersController],
-  providers: [AppService, CustomerService],
+  providers: [
+    AppService,
+    CustomerService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: MorganInterceptor('common'),
+    },
+  ],
 })
 export class AppModule {}
