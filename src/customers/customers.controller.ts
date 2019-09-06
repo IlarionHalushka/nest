@@ -9,7 +9,6 @@ import {
   Req,
   Request,
   UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { CustomerService } from './customer.service';
@@ -22,7 +21,6 @@ import { createCustomerSchema } from './schemas/customer.schema';
 export class CustomersController {
   constructor(private readonly customersService: CustomerService) {}
 
-  // `findAll` should be on top of `findOne` method because the order matters and parameters are not necessary(required)
   @Get()
   @Roles('admin')
   async findAll(@Req() request: Request): Promise<ICustomer[]> {
@@ -30,20 +28,17 @@ export class CustomersController {
   }
 
   @Post()
-  @HttpCode(204)
+  @HttpCode(201)
   @Roles('admin')
   @Header('Content-Type', 'application/json')
-  // TODO test if both validations work as expected
-  // @UsePipes(new ValidationPipe({ transform: true }))
   @UsePipes(new JoiValidationPipe(createCustomerSchema))
-  create(@Body() createCustomerDto: CreateCustomerDto): any {
+  create(@Body() createCustomerDto: CreateCustomerDto): ICustomer {
     return this.customersService.create(createCustomerDto);
   }
 
   @Get(':id')
   @Roles('admin')
   findOne(@Param() params): Promise<any[]> {
-    // findOne(@Param('id') id): string {  // to get just id param
     return Promise.resolve([`This action returns a #${params.id} customer`]);
   }
 }
