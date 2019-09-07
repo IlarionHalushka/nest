@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { HttpExceptionFilter } from './exception-filters/http-exception.filter';
 import { RolesGuard } from './guards/roles.guard';
+import { LoggingInterceptor } from './interceptors/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +11,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   // @ts-ignore
   app.useGlobalGuards(new RolesGuard());
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   const options = new DocumentBuilder()
     .setTitle('Example API title')
