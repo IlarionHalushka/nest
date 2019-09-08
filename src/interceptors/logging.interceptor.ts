@@ -13,6 +13,8 @@ export class LoggingInterceptor implements NestInterceptor {
     const now = Date.now();
     return next
       .handle()
-      .pipe(tap(() => console.log(`Request took: ${Date.now() - now}ms`)));
+      .pipe(
+        tap(() => process.stdout.write(`Request took: ${Date.now() - now}ms`)),
+      );
   }
 }
