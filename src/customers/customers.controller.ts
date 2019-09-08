@@ -16,6 +16,8 @@ import { ICustomer } from './interfaces/customer.interface';
 import { JoiValidationPipe } from '../pipes/validation.pipe';
 import { Roles } from '../decorators/roles.decorator';
 import { createCustomerSchema } from './schemas/customer.schema';
+import { User } from '../decorators/user.decorator';
+
 
 @Controller('customers')
 export class CustomersController {
@@ -38,7 +40,8 @@ export class CustomersController {
 
   @Get(':id')
   @Roles('admin')
-  findOne(@Param() params): Promise<any[]> {
+  findOne(@Param() params, @User() user): Promise<any[]> {
+    console.log(user);
     return Promise.resolve([`This action returns a #${params.id} customer`]);
   }
 }
