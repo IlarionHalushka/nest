@@ -6,6 +6,7 @@ import { CustomerService } from './customers/customer.service';
 import { CustomersModule } from './customers/customers.module';
 import { MorganInterceptor, MorganModule } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { ShutdownHook } from './lifecycle-hooks/shutdown.hook';
 
 @Module({
   imports: [CustomersModule, MorganModule.forRoot()],
@@ -17,6 +18,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
       provide: APP_INTERCEPTOR,
       useClass: MorganInterceptor('common'),
     },
+    ShutdownHook,
   ],
 })
 export class AppModule {}

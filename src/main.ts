@@ -12,6 +12,7 @@ async function bootstrap() {
   // @ts-ignore
   app.useGlobalGuards(new RolesGuard());
   app.useGlobalInterceptors(new LoggingInterceptor());
+  app.enableShutdownHooks();
 
   const options = new DocumentBuilder()
     .setTitle('Example API title')
