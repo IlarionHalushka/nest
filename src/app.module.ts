@@ -7,9 +7,11 @@ import { CustomersModule } from './customers/customers.module';
 import { MorganInterceptor, MorganModule } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ShutdownHook } from './lifecycle-hooks/shutdown.hook';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [CustomersModule, MorganModule.forRoot()],
+  imports: [CustomersModule, MorganModule.forRoot(), AuthModule, UsersModule],
   controllers: [AppController, CustomersController],
   providers: [
     AppService,
