@@ -1,16 +1,20 @@
 import { Injectable } from '@nestjs/common';
 import { ICustomer } from './interfaces/customer.interface';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class CustomerService {
-  private readonly customers: ICustomer[] = [];
+  constructor(
+    @InjectModel('Customer') private readonly customerModel: Model<ICustomer>,
+  ) {}
 
-  create(customer: ICustomer) {
-    this.customers.push(customer);
-    return customer;
+  async create(customer: ICustomer): Promise<ICustomer> {
+    const createdCustomer = new this.customerModel(customer);
+    return createdCustomer.save();
   }
 
-  findAll(): ICustomer[] {
-    return this.customers;
+  async findAll(): Promise<ICustomer[]> {
+    return this.customerModel.find();
   }
 }

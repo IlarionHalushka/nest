@@ -34,7 +34,7 @@ export class CustomersController {
   @Roles('admin')
   @Header('Content-Type', 'application/json')
   @UsePipes(new JoiValidationPipe(createCustomerSchema))
-  create(@Body() createCustomerDto: CreateCustomerDto): ICustomer {
+  create(@Body() createCustomerDto: CreateCustomerDto): Promise<ICustomer> {
     return this.customersService.create(createCustomerDto);
   }
 
