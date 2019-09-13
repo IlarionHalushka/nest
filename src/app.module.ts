@@ -13,11 +13,11 @@ import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
-    CustomersModule,
     MorganModule.forRoot(),
     AuthModule,
     UsersModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/nest_test'),
+    MongooseModule.forRoot('mongodb://localhost/nest_test'),
+    CustomersModule,
   ],
   controllers: [AppController, CustomersController],
   providers: [

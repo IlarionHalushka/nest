@@ -18,7 +18,6 @@ import { Roles } from '../decorators/roles.decorator';
 import { createCustomerSchema } from './schemas/customer.schema';
 import { User } from '../decorators/user.decorator';
 
-
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomerService) {}
