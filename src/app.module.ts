@@ -22,7 +22,6 @@ import { UsersModule } from './users/users.module';
   controllers: [AppController, CustomersController],
   providers: [
     AppService,
-    CustomerService,
     {
       provide: APP_INTERCEPTOR,
       useClass: MorganInterceptor('common'),

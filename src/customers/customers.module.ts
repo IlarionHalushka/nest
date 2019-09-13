@@ -13,6 +13,7 @@ import { CustomerService } from './customer.service';
   ],
   controllers: [CustomersController],
   providers: [CustomerService],
+  exports: [CustomerService]
 })
 export class CustomersModule {
 // export class CustomersModule implements NestModule {
