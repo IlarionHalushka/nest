@@ -8,6 +8,8 @@ import {
   Post,
   Req,
   Request,
+  UploadedFile,
+  UseInterceptors,
   UsePipes,
 } from '@nestjs/common';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -17,6 +19,8 @@ import { JoiValidationPipe } from '../pipes/validation.pipe';
 import { Roles } from '../decorators/roles.decorator';
 import { createCustomerSchema } from './schemas/customer.schema';
 import { User } from '../decorators/user.decorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiImplicitFile } from '@nestjs/swagger';
 
 @Controller('customers')
 export class CustomersController {
@@ -42,5 +46,17 @@ export class CustomersController {
   findOne(@Param() params, @User() user): Promise<any[]> {
     console.log(user);
     return Promise.resolve([`This action returns a #${params.id} customer`]);
+  }
+
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiConsumes('multipart/form-data')
+  @ApiImplicitFile({
+    name: 'file',
+    required: true,
+    description: 'List of customers',
+  })
+  uploadFile(@UploadedFile() file) {
+    console.log(file);
   }
 }
