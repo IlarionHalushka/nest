@@ -14,12 +14,15 @@ export class CustomerService {
     @InjectModel('Customer') private readonly customerModel: Model<ICustomer>,
   ) {}
 
+
+  // @ts-ignore
   async create(customer: ICustomer): Promise<ICustomer> {
-    const createdCustomer = new this.customerModel(customer);
-    return createdCustomer.save();
+    // const createdCustomer = new this.customerModel(customer);
+    // return createdCustomer.save();
   }
 
+  // @ts-ignore
   async findAll(): Promise<ICustomer[]> {
-    return this.customerModel.find();
+    // return this.customerModel.find();
   }
 }

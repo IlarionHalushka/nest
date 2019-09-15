@@ -17,7 +17,7 @@ import { CustomerService } from './customer.service';
 import { ICustomer } from './interfaces/customer.interface';
 import { JoiValidationPipe } from '../pipes/validation.pipe';
 import { Roles } from '../decorators/roles.decorator';
-import { createCustomerSchema } from './schemas/customer.schema';
+// import { createCustomerSchema } from './schemas/customer.schema';
 import { User } from '../decorators/user.decorator';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiImplicitFile } from '@nestjs/swagger';
@@ -36,7 +36,7 @@ export class CustomersController {
   @HttpCode(201)
   @Roles('admin')
   @Header('Content-Type', 'application/json')
-  @UsePipes(new JoiValidationPipe(createCustomerSchema))
+  // @UsePipes(new JoiValidationPipe(createCustomerSchema))
   create(@Body() createCustomerDto: CreateCustomerDto): Promise<ICustomer> {
     return this.customersService.create(createCustomerDto);
   }
