@@ -1,9 +1,8 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CustomersController } from './customers/customers.controller';
-import { CustomerService } from './customers/customer.service';
 import { CustomersModule } from './customers/customers.module';
 import { MorganInterceptor, MorganModule } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -18,6 +17,10 @@ import { UsersModule } from './users/users.module';
     UsersModule,
     MongooseModule.forRoot('mongodb://localhost/nest_test'),
     CustomersModule,
+    CacheModule.register({
+      ttl: 5, // seconds
+      max: 10, // maximum number of items in cache
+    }),
   ],
   controllers: [AppController, CustomersController],
   providers: [
@@ -27,6 +30,10 @@ import { UsersModule } from './users/users.module';
       useClass: MorganInterceptor('common'),
     },
     ShutdownHook,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
   ],
 })
 export class AppModule {}
