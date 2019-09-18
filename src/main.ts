@@ -14,12 +14,7 @@ async function bootstrap() {
   app.useGlobalGuards(new RolesGuard());
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.enableShutdownHooks();
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true
-    }),
-  );
+  app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
   const options = new DocumentBuilder()
     .setTitle('Example API title')

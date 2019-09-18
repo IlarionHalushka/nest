@@ -1,7 +1,7 @@
 import * as helmet from 'helmet';
 import * as cors from 'cors';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { MongooseModule, getModelToken } from '@nestjs/mongoose';
+import { MongooseModule } from '@nestjs/mongoose';
 import { CustomersController } from './customers.controller';
 import { logger } from './logger-middleware';
 import { CustomerSchema } from './schemas/customer.schema';
@@ -15,9 +15,8 @@ import { CustomerService } from './customer.service';
   providers: [CustomerService],
   exports: [CustomerService],
 })
-export class CustomersModule {
-  // export class CustomersModule implements NestModule {
-  // configure(consumer: MiddlewareConsumer) {
-  //   consumer.apply(helmet(), cors(), logger).forRoutes(CustomersController);
-  // }
+export class CustomersModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(helmet(), cors(), logger).forRoutes(CustomersController);
+  }
 }
