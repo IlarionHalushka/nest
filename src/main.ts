@@ -5,12 +5,23 @@ import { HttpExceptionFilter } from './exception-filters/http-exception.filter';
 import { RolesGuard } from './guards/roles.guard';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
+import * as csurf from 'csurf';
+import * as rateLimit from 'express-rate-limit';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  app.use(cookieParser());
+  app.use(csurf());
+  app.use(
+    rateLimit({
+      windowMs: 60 * 1000, // 1 minute
+      max: 100, // limit each IP to 100 requests per windowMs
+    }),
+  );
+
   app.useGlobalFilters(new HttpExceptionFilter());
-  // @ts-ignore
   app.useGlobalGuards(new RolesGuard());
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.enableShutdownHooks();
