@@ -6,13 +6,19 @@ import { AppService } from './app.service';
 import { Roles } from './decorators/roles.decorator';
 import { AuthService } from './auth/auth.service';
 import { LoginDTO } from './auth/dto/login.dto';
+import { ConfigService } from './config-module/config-service.service';
 
 @Controller()
 export class AppController {
+  private isAuthEnabled: boolean;
+
   constructor(
     private readonly appService: AppService,
     private readonly authService: AuthService,
-  ) {}
+    config: ConfigService,
+  ) {
+    this.isAuthEnabled = config.get('IS_AUTH_ENABLED') === 'true';
+  }
 
   @Get()
   @Roles('admin')

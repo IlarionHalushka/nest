@@ -9,6 +9,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { ShutdownHook } from './lifecycle-hooks/shutdown.hook';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { ConfigModule } from './config-module/config-module.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { UsersModule } from './users/users.module';
       ttl: 5, // seconds
       max: 10, // maximum number of items in cache
     }),
+    ConfigModule
   ],
   controllers: [AppController, CustomersController],
   providers: [
