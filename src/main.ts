@@ -29,6 +29,8 @@ async function bootstrap() {
   app.enableShutdownHooks();
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
 
+  app.setGlobalPrefix('v1');
+
   const options = new DocumentBuilder()
     .setTitle('Example API title')
     .setDescription('API description')
