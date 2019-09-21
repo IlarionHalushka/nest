@@ -14,7 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.use(cookieParser());
-  app.use(csurf());
+  // app.use(csurf());
   app.use(
     rateLimit({
       windowMs: 60 * 1000, // 1 minute

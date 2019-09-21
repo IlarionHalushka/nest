@@ -10,6 +10,7 @@ import { ShutdownHook } from './lifecycle-hooks/shutdown.hook';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from './config-module/config-module.module';
+import { SocketModule } from './socket/socket.module';
 
 @Module({
   imports: [
@@ -22,7 +23,8 @@ import { ConfigModule } from './config-module/config-module.module';
       ttl: 5, // seconds
       max: 10, // maximum number of items in cache
     }),
-    ConfigModule
+    ConfigModule,
+    SocketModule
   ],
   controllers: [AppController, CustomersController],
   providers: [
