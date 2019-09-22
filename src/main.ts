@@ -6,9 +6,11 @@ import { RolesGuard } from './guards/roles.guard';
 import { LoggingInterceptor } from './interceptors/logging.interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import * as cookieParser from 'cookie-parser';
-import * as csurf from 'csurf';
+// import * as csurf from 'csurf';
 import * as rateLimit from 'express-rate-limit';
 import * as compression from 'compression';
+import { MicroserviceModule } from './microservice/microservice.module';
+import { Transport } from '@nestjs/common/enums/transport.enum';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -42,5 +44,11 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(3000);
+
+  const microService = await NestFactory.createMicroservice(
+    MicroserviceModule,
+    { transport: Transport.TCP, options: { host: 'localhost', port: 3005 } },
+  );
+  microService.listen(() => console.log('Microservice is listening'));
 }
 bootstrap();

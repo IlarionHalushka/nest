@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from './config-module/config-module.module';
 import { SocketModule } from './socket/socket.module';
+import { MicroserviceModule } from './microservice/microservice.module';
 
 @Module({
   imports: [
@@ -24,7 +25,8 @@ import { SocketModule } from './socket/socket.module';
       max: 10, // maximum number of items in cache
     }),
     ConfigModule,
-    SocketModule
+    SocketModule,
+    MicroserviceModule
   ],
   controllers: [AppController, CustomersController],
   providers: [
