@@ -34,6 +34,7 @@ async function bootstrap() {
   app.setGlobalPrefix('v1');
 
   const options = new DocumentBuilder()
+    .setBasePath('v1')
     .setTitle('Example API title')
     .setDescription('API description')
     .setVersion('1.0')
