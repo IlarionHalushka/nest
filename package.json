@@ -42,7 +42,7 @@
     "dotenv": "^8.1.0",
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.20.1",
-    "mongoose": "^5.7.0",
+    "mongoose": "^5.7.5",
     "morgan": "^1.9.1",
     "nest-morgan": "^1.0.1",
     "passport": "^0.4.0",
